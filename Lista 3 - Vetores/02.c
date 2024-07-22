@@ -6,6 +6,7 @@ int main(){
    int v;
    scanf("%d", &v);
    N[0] = v; 
+   
    for (i = 1; i < 10; i++){
        N[i] = v*2;
         v = N[i]; 
