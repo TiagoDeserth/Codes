@@ -39,5 +39,7 @@ int main() {
 
     for (j = 0; j < qp; j++){
         printf("par[%d] = %d\n", j, par[j]);
-    } 
+    }
+
+    return 0; 
 }

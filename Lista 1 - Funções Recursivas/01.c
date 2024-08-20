@@ -12,4 +12,6 @@ int main(){
         scanf("%d %d", &n, &k);
         printf("Case %d: %d\n", i, sobrevivente(n, k) + 1);
     }
+
+    return 0;
 }

@@ -3,7 +3,9 @@
 #define TAMANHO 1000
 
 int main() {
-    int T, N[TAMANHO], i;
+    int T; 
+    int N[TAMANHO]; 
+    int i;
 
     scanf("%d", &T);
 
@@ -14,4 +16,6 @@ int main() {
     for (i = 0; i < TAMANHO; i++) {
         printf("N[%d] = %d\n", i, N[i]);
     }
+
+    return 0;
 }

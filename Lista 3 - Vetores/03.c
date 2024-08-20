@@ -10,4 +10,6 @@ int main(){
             printf("A[%d] = %.1f\n", i, A[i]);
         }
     }
+
+    return 0;
 }
