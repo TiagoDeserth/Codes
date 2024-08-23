@@ -1,31 +1,30 @@
-#include <string.h>
 #include <stdio.h>
-#include <ctype.h>
 
-int main(){
+int main() {
     int N;
-    char frase[201];
-    int maior, frequencias[26];
+    int freq[26]; 
+    int max;
+    int i;
+    char str[201];
 
-    scanf("%d\n", &N);
+    scanf("%d", &N);
+    while (N--) {
+        for (i = 0; i < 26; i++) freq[i] = 0;
+        max = 0;
 
-    for(int i = 0; i < N; ++i){
-        memset(frequencias, 0, sizeof(frequencias));
+        scanf(" %[^\n]", str);
 
-        scanf("%[^\n]\n", &frase);
-
-        for(int j = 0; j < strlen(frase); ++j){
-            if(isalpha(frase[j]))   frequencias[tolower(frase[j]) - 'a']++;
+        for (i = 0; str[i]; i++) {
+            if (str[i] >= 'A' && str[i] <= 'Z') str[i] += 32;
+            if (str[i] >= 'a' && str[i] <= 'z') {
+                int index = str[i] - 'a';
+                freq[index]++;
+                if (freq[index] > max) max = freq[index];
+            }
         }
 
-        maior = 0;
-        for(int j = 0; j < 26; ++j){
-            if(maior < frequencias[j])  maior = frequencias[j];
-        }
-
-        for(int j = 0; j < 26; ++j){
-            if(frequencias[j] == maior) printf("%c", j + 'a');
-        }
+        for (i = 0; i < 26; i++)
+            if (freq[i] == max) printf("%c", i + 'a');
         printf("\n");
     }
 
