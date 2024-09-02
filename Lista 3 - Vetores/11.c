@@ -3,54 +3,56 @@
 
 int main() {
     int N;
-    char text[100][51]; 
-    char line[51];
-    int max_len;
-    int len;
+    char texto[100][51];
+    int max_tamanho;
     int i;
     int j;
 
     while (1) {
         scanf("%d", &N);
-        if (N == 0) break;
+        if (N == 0) 
+            break;
 
         getchar();
 
-        max_len = 0;
+        max_tamanho = 0;
 
         for (i = 0; i < N; i++) {
-            fgets(line, 51, stdin);
+            fgets(texto[i], sizeof(texto[i]), stdin);
 
-            len = strlen(line);
-            if (line[len - 1] == '\n') {
-                line[len - 1] = '\0';
-                len--;
+            int tamanho = strlen(texto[i]);
+            if (texto[i][tamanho - 1] == '\n') {
+                texto[i][tamanho - 1] = '\0';
+                tamanho--;
             }
 
-            int k = 0, word_started = 0;
-            for (j = 0; j < len; j++) {
-                if (line[j] != ' ') {
-                    if (word_started && line[j - 1] == ' ') {
-                        text[i][k++] = ' ';
+            int k = 0;
+            int espaco_encontrado = 0;
+            for (j = 0; j < tamanho; j++) {
+                if (texto[i][j] != ' ') {
+                    if (espaco_encontrado && k > 0) {
+                        texto[i][k++] = ' ';
                     }
-                    text[i][k++] = line[j];
-                    word_started = 1;
+                    texto[i][k++] = texto[i][j];
+                    espaco_encontrado = 0;
+                } else if (!espaco_encontrado) {
+                    espaco_encontrado = 1;
                 }
             }
-            text[i][k] = '\0';
+            texto[i][k] = '\0';
 
-            len = strlen(text[i]);
-            if (len > max_len) {
-                max_len = len;
+            if (k > max_tamanho) {
+                max_tamanho = k;
             }
         }
 
         for (i = 0; i < N; i++) {
-            len = strlen(text[i]);
-            for (j = 0; j < max_len - len; j++) {
-                printf(" ");
+            int tamanho = strlen(texto[i]);
+            int num_espacos = max_tamanho - tamanho;
+            for (j = 0; j < num_espacos; j++) {
+                putchar(' ');
             }
-            printf("%s\n", text[i]);
+            printf("%s\n", texto[i]);
         }
 
         printf("\n");

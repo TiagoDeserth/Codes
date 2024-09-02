@@ -1,21 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-#define MAX 100
-
-void preencheMatriz(int matriz[MAX][MAX], int n) {
-    for (int linha = 0; linha < n; linha++) {
-        for (int coluna = 0; coluna < n; coluna++) {
-            matriz[linha][coluna] = abs(linha - coluna) + 1;
-        }
+void preencherMatriz(int matriz[][100], int ordem, int i, int j) {
+    if (i >= ordem) {
+        return;
     }
+    if (j >= ordem) {
+        preencherMatriz(matriz, ordem, i + 1, 0);
+        return;
+    }
+    matriz[i][j] = (i >= j) ? (i - j + 1) : (j - i + 1);
+    preencherMatriz(matriz, ordem, i, j + 1);
 }
 
-void imprimeMatriz(int matriz[MAX][MAX], int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+void imprimirMatriz(int matriz[][100], int ordem) {
+    for (int i = 0; i < ordem; i++) {
+        for (int j = 0; j < ordem; j++) {
             printf("%3d", matriz[i][j]);
-            if (j < n - 1) printf(" ");
+            if (j < ordem - 1) {
+                printf(" ");
+            }
         }
         printf("\n");
     }
@@ -23,18 +26,16 @@ void imprimeMatriz(int matriz[MAX][MAX], int n) {
 }
 
 int main() {
-    int n;
-    int matriz[MAX][MAX];
+    int matriz[100][100];
+    int ordem;
 
     while (1) {
-        scanf("%d", &n);
-        if (n == 0) 
+        scanf("%d", &ordem);
+        if (ordem == 0) {
             break;
-        if (n < 0 || n > 100) 
-            continue;
-
-        preencheMatriz(matriz, n);
-        imprimeMatriz(matriz, n);
+        }
+        preencherMatriz(matriz, ordem, 0, 0);
+        imprimirMatriz(matriz, ordem);
     }
 
     return 0;
