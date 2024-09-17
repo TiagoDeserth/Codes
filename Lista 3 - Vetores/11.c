@@ -1,62 +1,80 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() {
-    int N;
-    char texto[100][51];
-    int max_tamanho;
-    int i;
-    int j;
+typedef struct{
+	char palavra[51];
+} string;
 
-    while (1) {
-        scanf("%d", &N);
-        if (N == 0) 
-            break;
+typedef struct{
+	char saida[51];
+} saida;
 
-        getchar();
+int ehLetra(char c) {
+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
 
-        max_tamanho = 0;
+void main() {
+	int casos, aux, tam;
+	int maior, atual;
+    int i, j, k;
 
-        for (i = 0; i < N; i++) {
-            fgets(texto[i], sizeof(texto[i]), stdin);
+	scanf("%d", &casos);
+	while (1) {	
+		if (casos == 0)
+			break;
 
-            int tamanho = strlen(texto[i]);
-            if (texto[i][tamanho - 1] == '\n') {
-                texto[i][tamanho - 1] = '\0';
-                tamanho--;
-            }
+		aux = casos;
 
-            int k = 0;
-            int espaco_encontrado = 0;
-            for (j = 0; j < tamanho; j++) {
-                if (texto[i][j] != ' ') {
-                    if (espaco_encontrado && k > 0) {
-                        texto[i][k++] = ' ';
-                    }
-                    texto[i][k++] = texto[i][j];
-                    espaco_encontrado = 0;
-                } else if (!espaco_encontrado) {
-                    espaco_encontrado = 1;
-                }
-            }
-            texto[i][k] = '\0';
+		string palavra[aux];
+		saida textoSaida[aux];
 
-            if (k > max_tamanho) {
-                max_tamanho = k;
-            }
-        }
+		i = 0;
+		while (casos--)
+			scanf(" %[^\n]", palavra[i++].palavra);
 
-        for (i = 0; i < N; i++) {
-            int tamanho = strlen(texto[i]);
-            int num_espacos = max_tamanho - tamanho;
-            for (j = 0; j < num_espacos; j++) {
-                putchar(' ');
-            }
-            printf("%s\n", texto[i]);
-        }
+		i = 0;
+		tam = aux;
+		while (aux--) {
+			j = 0;
+			k = 0;
+			while (1) {
+				while (ehLetra(palavra[i].palavra[j]))	
+					textoSaida[i].saida[k++] = palavra[i].palavra[j++];
 
-        printf("\n");
-    }
+				if (palavra[i].palavra[j] == '\0')
+					break;
+
+				while (!ehLetra(palavra[i].palavra[j])) {	
+					j++;
+					if (palavra[i].palavra[j] == '\0')
+						break;
+				}
+
+				if (palavra[i].palavra[j] == '\0')
+					break;
+
+				textoSaida[i].saida[k++] = ' ';
+			}
+				
+			textoSaida[i].saida[k] = '\0';
+			i++;
+		}	
+
+		maior = 0;
+		for(i = 0; i < tam; i++) {
+			atual = strlen(textoSaida[i].saida);
+			if (atual > maior)
+				maior = atual;
+		}
+
+		for (i = 0; i < tam; i++)
+			printf("%*s\n", maior, textoSaida[i].saida);
+
+		scanf("%d", &casos);
+
+		if(casos != 0)
+			printf("\n");
+	}
 
     return 0;
 }
